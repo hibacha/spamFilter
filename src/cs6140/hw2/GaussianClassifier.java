@@ -3,7 +3,7 @@ package cs6140.hw2;
 import java.util.ArrayList;
 import java.util.Vector;
 
-public class GaussianClassifier {
+public class GaussianClassifier extends BaseClassifier{
 
 	/**
 	 * @param args
@@ -151,10 +151,5 @@ public class GaussianClassifier {
 		double PI=3.14;
 		return  (1/Math.sqrt(2*PI*var))*Math.exp(-1*Math.pow(x-mui,2)/(2*var));
 	}
-	private boolean isFN(boolean isPredictSpam) {
-		return !isPredictSpam;
-	}
-	public  boolean isSpam(Vector<Double> mail) {
-		return mail.get(57) == 1;
-	}
+	
 }

@@ -7,7 +7,7 @@ import java.util.Vector;
 
 
 
-public class BernaulliClassifier {
+public class BernaulliClassifier extends BaseClassifier{
 
 	/**
 	 * @param args
@@ -59,7 +59,7 @@ public class BernaulliClassifier {
 		double likelihoodSpam = 1;
 		double likelihoodNonSpam = 1;
 		for (int featureIndex = 0; featureIndex < 57; featureIndex++) {
-			if (mail.get(featureIndex) <= Constant.OVERALLMEANARRAYLIST
+			if (mail.get(featureIndex) <= MyConstant.OVERALLMEANARRAYLIST
 					.get(featureIndex)) {
 				likelihoodSpam *= probLessEqMuiSpamArray[featureIndex];
 				likelihoodNonSpam *= probLessEqMuiNonSpamArray[featureIndex];
@@ -72,9 +72,6 @@ public class BernaulliClassifier {
 				/ (likelihoodNonSpam * proriNonSpam) > 1;
 	}
 	
-	private boolean isFN(boolean isPredictSpam) {
-		return !isPredictSpam;
-	}
 	public void beginToTrainData(int k) {
 		trainingSetNonSpamTotalNum = 0;
 		trainingSetSpamTotalNum = 0;
@@ -115,7 +112,7 @@ public class BernaulliClassifier {
 			double[] countGreatMuiNonSpam, Vector<Double> oneMail) {
 		if (isSpam(oneMail)) {
 			for (int featureIndex = 0; featureIndex < 57; featureIndex++) {
-				if (oneMail.get(featureIndex) <= Constant.OVERALLMEANARRAYLIST
+				if (oneMail.get(featureIndex) <= MyConstant.OVERALLMEANARRAYLIST
 						.get(featureIndex)) {
 					countLessEqMuiSpam[featureIndex]++;
 				} else {
@@ -125,7 +122,7 @@ public class BernaulliClassifier {
 			trainingSetSpamTotalNum++;
 		} else {
 			for (int featureIndex = 0; featureIndex < 57; featureIndex++) {
-				if (oneMail.get(featureIndex) <= Constant.OVERALLMEANARRAYLIST
+				if (oneMail.get(featureIndex) <= MyConstant.OVERALLMEANARRAYLIST
 						.get(featureIndex)) {
 					countLessEqMuiNonSpam[featureIndex]++;
 				} else {
@@ -136,8 +133,6 @@ public class BernaulliClassifier {
 		}
 	}
 
-	public static boolean isSpam(Vector<Double> mail) {
-		return mail.get(57) == 1;
-	}
+	
 
 }
