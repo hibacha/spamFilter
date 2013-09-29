@@ -11,24 +11,45 @@ import java.util.Vector;
 
 public class KCrossValidation {
 
+	public ArrayList<Vector<Double>> getTrainingData() {
+		return trainingData;
+	}
+
+	public void setTrainingData(ArrayList<Vector<Double>> trainingData) {
+		this.trainingData = trainingData;
+	}
+
+	public ArrayList<Vector<Double>> getTestingData() {
+		return testingData;
+	}
+
+	public void setTestingData(ArrayList<Vector<Double>> testingData) {
+		this.testingData = testingData;
+	}
+
 	/**
 	 * @param args
 	 */
 	private int k;
 	private ArrayList<ArrayList<String>> partitionedFolds = new ArrayList<ArrayList<String>>();
 	private HashMap<Integer, ArrayList<Vector<Double>>> vectorFoldsMap = new HashMap<Integer, ArrayList<Vector<Double>>>();
-	private ArrayList<Vector<Double>> trainingData;
-	private ArrayList<Vector<Double>> testingData;
+	private ArrayList<Vector<Double>> trainingData = new ArrayList<Vector<Double>>();
+	private ArrayList<Vector<Double>> testingData = new ArrayList<Vector<Double>>();
 
 	public KCrossValidation(int k) {
 		this.k = k;
-
+		readFromGivenURL(Constant.DATA_PATH);
 	}
 
-	private void readFromGivenURL(String url) throws IOException {
+	private void readFromGivenURL(String url)  {
 		File file = new File(url);
 		initPartitionedFolds();
-		parseFile(file);
+		try {
+			parseFile(file);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		groupRawData();
 	}
 
