@@ -38,7 +38,7 @@ public class KCrossValidation {
 
 	public KCrossValidation(int k) {
 		this.k = k;
-		readFromGivenURL(Constant.DATA_PATH);
+		readFromGivenURL(MyConstant.DATA_PATH);
 	}
 
 	private void readFromGivenURL(String url)  {
@@ -110,6 +110,6 @@ public class KCrossValidation {
 
 	public static void main(String[] args) throws IOException {
 		KCrossValidation kv = new KCrossValidation(10);
-		kv.readFromGivenURL(Constant.DATA_PATH);
+		kv.readFromGivenURL(MyConstant.DATA_PATH);
 	}
 }
