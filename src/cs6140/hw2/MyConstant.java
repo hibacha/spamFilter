@@ -3,7 +3,7 @@ package cs6140.hw2;
 import java.util.Arrays;
 import java.util.List;
 
-public final class Constant {
+public final class MyConstant {
 
 	public static final Integer NUMS_FOLDS = 10;
 	public static final String  DATA_PATH="/Users/zhouyf/Stack/machine learning/homework/hw2/spambase/spambase.data";
