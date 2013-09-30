@@ -53,7 +53,7 @@ public class GaussianClassifier extends BaseClassifier{
 		for (int i = 0; i < 57; i++) {
 			spamConditionalMui[i]=spamSumFreq[i]/trainingSetSpamTotalNum;
 			nonSpamConditionalMui[i]=nonSpamSumFreq[i]/trainingSetNonSpamTotalNum;
-			overallTrainingMui[i]=(spamSumFreq[i]+nonSpamConditionalMui[i])/(trainingSetSpamTotalNum+trainingSetNonSpamTotalNum);
+			overallTrainingMui[i]=(spamSumFreq[i]+nonSpamSumFreq[i])/(trainingSetSpamTotalNum+trainingSetNonSpamTotalNum);
 		}
 		calculateVariance(k);
 		proriSpam = trainingSetSpamTotalNum
