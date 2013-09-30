@@ -19,4 +19,5 @@ public class BaseClassifier {
 		return mail.get(57) == 1;
 	}
 
+	
 }
