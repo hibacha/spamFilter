@@ -41,7 +41,8 @@ public class BaseClassifier {
 		int tpNum = 0;
 		
 		for (Vector<Double> mail : kcrossValidation.getTestingData()) {
-			boolean isPredictSpam = classifier.predictIsSpam(mail);
+			double log = classifier.predictIsSpam(mail);
+			boolean isPredictSpam = log>0;
 			boolean isActualSpam = isSpam(mail);
 			if (isActualSpam != isPredictSpam) {
 				errorNum++;

@@ -35,7 +35,7 @@ public class BernaulliClassifier extends BaseClassifier implements IClassifier{
 	}
 	
 	
-	public boolean predictIsSpam(Vector<Double> mail) {
+	public double predictIsSpam(Vector<Double> mail) {
 		double likelihoodSpam = 1;
 		double likelihoodNonSpam = 1;
 		for (int featureIndex = 0; featureIndex < 57; featureIndex++) {
@@ -48,8 +48,8 @@ public class BernaulliClassifier extends BaseClassifier implements IClassifier{
 				likelihoodNonSpam *= probGreatMuiNonSpamArray[featureIndex];
 			}
 		}
-		return (likelihoodSpam * proriSpam)
-				/ (likelihoodNonSpam * proriNonSpam) > 1;
+		return Math.log((likelihoodSpam * proriSpam)
+				/ (likelihoodNonSpam * proriNonSpam)) ;
 	}
 	
 	public void beginToTrainData(int k) {

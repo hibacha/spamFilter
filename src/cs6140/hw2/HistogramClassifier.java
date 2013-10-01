@@ -55,7 +55,7 @@ public class HistogramClassifier extends BaseClassifier implements IClassifier{
 //		return result;
 //	}
 
-	public boolean predictIsSpam(Vector<Double> mail) {
+	public double predictIsSpam(Vector<Double> mail) {
 		double result = 1;
 		for (int i = 0; i < 57; i++) {
 			double featureValue = mail.get(i);
@@ -65,7 +65,7 @@ public class HistogramClassifier extends BaseClassifier implements IClassifier{
 
 		}
 		result *= proriSpam / proriNonSpam;
-		return result > 1;
+		return Math.log(result);
 	}
 
 	public int whichBucket(Interval[] intervals, double featureValue) {

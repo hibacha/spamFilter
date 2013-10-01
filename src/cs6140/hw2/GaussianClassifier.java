@@ -133,7 +133,7 @@ public class GaussianClassifier extends BaseClassifier implements IClassifier{
 //		double[] result = { fnNum, fpNum, errorNum /  kcrossValidation.getTestingData().size() };
 //		return result;
 //	}
-	public boolean predictIsSpam(Vector<Double> mail){
+	public double predictIsSpam(Vector<Double> mail){
 		double express=0;
 		double spamEle=0;
 		double nonSpamEle=0;
@@ -144,7 +144,7 @@ public class GaussianClassifier extends BaseClassifier implements IClassifier{
 			
 		}
 		express+=Math.log(proriSpam/proriNonSpam);
-		return express>0;
+		return express;
 	}
 	public double pdf(double x, double mui, double var){
 		double PI=3.14;
