@@ -28,10 +28,16 @@ public class BernaulliClassifier extends BaseClassifier implements IClassifier{
 		BernaulliClassifier b= new BernaulliClassifier();
 		for(int testGroupId = 0; testGroupId < 10; testGroupId++){
 			b.beginToTrainData(testGroupId);
-			double[] result = b.overallErrorRate(b);
+			double[] result = b.overallErrorRate(b,0,false);
 			System.out.println("B@@FN:" + result[0] + " FT:" + result[1]
 					+ " OVERALL ERROR RATE:" + result[2]);
 		}
+	   
+		b.beginToTrainData(0);
+		//first time run on fold1 to get a list of tau
+		b.overallErrorRate(b, 0, false);
+		b.ROC(b);
+		
 	}
 	
 	

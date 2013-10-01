@@ -1,5 +1,9 @@
 package cs6140.hw2;
 
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Vector;
 
 public class BaseClassifier {
@@ -7,8 +11,9 @@ public class BaseClassifier {
 	/**
 	 * @param args
 	 */
-	
+	protected List<Double> tau = new ArrayList<Double>();
 	protected KCrossValidation kcrossValidation = new KCrossValidation(10);
+	protected List<Point> plotPoints = new ArrayList<Point>();
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -32,17 +37,38 @@ public class BaseClassifier {
 		}
 		return sum/elements.length;
 	}
-	
-	public double[] overallErrorRate(IClassifier classifier) {
+	public void ROC(IClassifier classifier){
+		classifier.beginToTrainData(0);
+		overallErrorRate(classifier, 0, false);
+		Collections.sort(tau);
+		plotPoints.clear();
+		for(double threshhold:tau){
+			overallErrorRate(classifier,threshhold, true);
+		}
+		
+		for(Point p: plotPoints){
+			System.out.println("["+ p.getX()+"],["+p.getY()+"]");
+		}
+//		for(double d:tau){
+//			System.out.println("ROC"+d);
+//		}
+	}
+	public double[] overallErrorRate(IClassifier classifier, double threshHold,boolean drawROC) {
 		double errorNum = 0;
 		int fnNum = 0;
 		int fpNum = 0;
 		int tnNum = 0;
 		int tpNum = 0;
-		
-		for (Vector<Double> mail : kcrossValidation.getTestingData()) {
+		ArrayList<Vector<Double>> testingSet = kcrossValidation.getTestingData();
+		if (!drawROC) {
+			tau.clear();
+		}
+		for (Vector<Double> mail : testingSet) {
 			double log = classifier.predictIsSpam(mail);
-			boolean isPredictSpam = log>0;
+			if (!drawROC) {
+				tau.add(log);
+			}
+			boolean isPredictSpam = log > threshHold;
 			boolean isActualSpam = isSpam(mail);
 			if (isActualSpam != isPredictSpam) {
 				errorNum++;
@@ -61,8 +87,14 @@ public class BaseClassifier {
 		}
 		double[] result = { fnNum, fpNum,
 				errorNum / kcrossValidation.getTestingData().size() };
-		System.out.println(tpr(fnNum, fpNum, tnNum, tpNum));
-		System.out.println(fpr(fnNum, fpNum, tnNum, tpNum));
+		
+		if (drawROC) {
+			double tpr = tpr(fnNum, fpNum, tnNum, tpNum);
+			double fpr = fpr(fnNum, fpNum, tnNum, tpNum);
+			Point point = new Point(fpr, tpr);
+
+			plotPoints.add(point);
+		}
 		return result;
 	}
 	

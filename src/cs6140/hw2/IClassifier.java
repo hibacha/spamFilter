@@ -9,4 +9,6 @@ public interface IClassifier {
 	 * @return log-odds for expression of p(spam|data)/p(nonspam|data)
 	 */
   public double predictIsSpam(Vector<Double> mail);
+  
+  public void beginToTrainData(int foldNum);
 }

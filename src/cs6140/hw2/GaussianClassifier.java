@@ -27,10 +27,12 @@ public class GaussianClassifier extends BaseClassifier implements IClassifier{
 		GaussianClassifier g= new GaussianClassifier();
 		for(int testGroupId = 0; testGroupId < 10; testGroupId++){
 			g.beginToTrainData(testGroupId);
-			double[] result = g.overallErrorRate(g);
+			double[] result = g.overallErrorRate(g,0,false);
 			System.out.println("Gaussian@@FN:" + result[0] + " FT:" + result[1]
 					+ " OVERALL ERROR RATE:" + result[2]);
 		}
+		
+		g.ROC(g);
 	}
 	
 	public void beginToTrainData(int k) {

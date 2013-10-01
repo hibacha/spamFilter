@@ -28,10 +28,12 @@ public class HistogramClassifier extends BaseClassifier implements IClassifier{
 		HistogramClassifier h = new HistogramClassifier();
 		for (int i = 0; i < 10; i++) {
 			h.beginToTrainData(i);
-			double[] result = h.overallErrorRate(h);
+			double[] result = h.overallErrorRate(h,0, false);
 			System.out.println("histogram@FN:" + result[0] + " FT:" + result[1]
 					+ " OVERALL ERROR RATE:" + result[2]);
 		}
+		
+		h.ROC(h);
 	}
 
 //	public double[] overallErrorRate() {
