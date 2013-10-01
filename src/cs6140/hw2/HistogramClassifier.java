@@ -34,6 +34,7 @@ public class HistogramClassifier extends BaseClassifier implements IClassifier{
 		}
 		
 		h.ROC(h);
+		System.out.println("AUC="+h.AUC());
 	}
 
 //	public double[] overallErrorRate() {

@@ -15,18 +15,23 @@ public class BaseClassifier {
 	protected KCrossValidation kcrossValidation = new KCrossValidation(10);
 	protected List<Point> plotPoints = new ArrayList<Point>();
 	
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
-	}
 	
 	protected boolean isFN(boolean isPredictSpam) {
 		return !isPredictSpam;
 	}
+	
 	protected  boolean isSpam(Vector<Double> mail) {
 		return mail.get(57) == 1;
 	}
-
+	
+	protected double AUC(){
+		double sum=0;
+		for(int i=1;i<plotPoints.size();i++){
+			sum+=(plotPoints.get(i).getX()-plotPoints.get(i-1).getX())*(plotPoints.get(i).getY()+plotPoints.get(i-1).getY());
+		}
+		return sum*0.5;
+	}
+	
 	protected double average(double[] elements){
 		if(elements.length==0){
 			return 0;
@@ -41,13 +46,15 @@ public class BaseClassifier {
 		classifier.beginToTrainData(0);
 		overallErrorRate(classifier, 0, false);
 		Collections.sort(tau);
+		Collections.reverse(tau);
 		plotPoints.clear();
 		for(double threshhold:tau){
 			overallErrorRate(classifier,threshhold, true);
 		}
 		
 		for(Point p: plotPoints){
-			System.out.println("["+ p.getX()+"],["+p.getY()+"]");
+//			System.out.println("["+ p.getX()+"],["+p.getY()+"]");
+			System.out.println(p.getX()+","+p.getY());
 		}
 //		for(double d:tau){
 //			System.out.println("ROC"+d);

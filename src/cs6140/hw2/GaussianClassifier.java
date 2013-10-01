@@ -33,6 +33,7 @@ public class GaussianClassifier extends BaseClassifier implements IClassifier{
 		}
 		
 		g.ROC(g);
+		System.out.println("AUC="+g.AUC());
 	}
 	
 	public void beginToTrainData(int k) {

@@ -37,7 +37,7 @@ public class BernaulliClassifier extends BaseClassifier implements IClassifier{
 		//first time run on fold1 to get a list of tau
 		b.overallErrorRate(b, 0, false);
 		b.ROC(b);
-		
+		System.out.println("AUC="+b.AUC());
 	}
 	
 	
