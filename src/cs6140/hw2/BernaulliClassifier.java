@@ -7,12 +7,11 @@ import java.util.Vector;
 
 
 
-public class BernaulliClassifier extends BaseClassifier{
+public class BernaulliClassifier extends BaseClassifier implements IClassifier{
 
 	/**
 	 * @param args
 	 */
-	private KCrossValidation kcrossValidation = new KCrossValidation(10);
 
 	double trainingSetSpamTotalNum = 0;
 	double trainingSetNonSpamTotalNum = 0;
@@ -26,34 +25,15 @@ public class BernaulliClassifier extends BaseClassifier{
 	double proriNonSpam = 0;
 
 	public static void main(String[] args) {
-		BernaulliClassifier c= new BernaulliClassifier();
+		BernaulliClassifier b= new BernaulliClassifier();
 		for(int testGroupId = 0; testGroupId < 10; testGroupId++){
-			c.beginToTrainData(testGroupId);
-			double[] result = c.overallErrorRate();
+			b.beginToTrainData(testGroupId);
+			double[] result = b.overallErrorRate(b);
 			System.out.println("B@@FN:" + result[0] + " FT:" + result[1]
 					+ " OVERALL ERROR RATE:" + result[2]);
 		}
 	}
 	
-	public double[] overallErrorRate() {
-		double errorNum = 0;
-		int fnNum = 0;
-		int fpNum = 0;
-		for (Vector<Double> mail : kcrossValidation.getTestingData()) {
-			boolean isPredictSpam = predictIsSpam(mail);
-			boolean isActualSpam = isSpam(mail);
-			if (isActualSpam != isPredictSpam) {
-				errorNum++;
-				if (isFN(isPredictSpam)) {
-					fnNum++;
-				} else {
-					fpNum++;
-				}
-			}
-		}
-		double[] result = { fnNum, fpNum, errorNum /  kcrossValidation.getTestingData().size() };
-		return result;
-	}
 	
 	public boolean predictIsSpam(Vector<Double> mail) {
 		double likelihoodSpam = 1;

@@ -3,12 +3,11 @@ package cs6140.hw2;
 import java.util.ArrayList;
 import java.util.Vector;
 
-public class GaussianClassifier extends BaseClassifier{
+public class GaussianClassifier extends BaseClassifier implements IClassifier{
 
 	/**
 	 * @param args
 	 */
-	private KCrossValidation kcrossValidation = new KCrossValidation(10);
 	private double trainingSetSpamTotalNum = 0;
 	private double trainingSetNonSpamTotalNum = 0;
 	
@@ -28,7 +27,7 @@ public class GaussianClassifier extends BaseClassifier{
 		GaussianClassifier g= new GaussianClassifier();
 		for(int testGroupId = 0; testGroupId < 10; testGroupId++){
 			g.beginToTrainData(testGroupId);
-			double[] result = g.overallErrorRate();
+			double[] result = g.overallErrorRate(g);
 			System.out.println("Gaussian@@FN:" + result[0] + " FT:" + result[1]
 					+ " OVERALL ERROR RATE:" + result[2]);
 		}
@@ -115,26 +114,26 @@ public class GaussianClassifier extends BaseClassifier{
 		}
 	}
 
-	public double[] overallErrorRate() {
-		double errorNum = 0;
-		int fnNum = 0;
-		int fpNum = 0;
-		for (Vector<Double> mail : kcrossValidation.getTestingData()) {
-			boolean isPredictSpam = predictIsSpamByGaussian(mail);
-			boolean isActualSpam = isSpam(mail);
-			if (isActualSpam != isPredictSpam) {
-				errorNum++;
-				if (isFN(isPredictSpam)) {
-					fnNum++;
-				} else {
-					fpNum++;
-				}
-			}
-		}
-		double[] result = { fnNum, fpNum, errorNum /  kcrossValidation.getTestingData().size() };
-		return result;
-	}
-	public boolean predictIsSpamByGaussian(Vector<Double> mail){
+//	public double[] overallErrorRate() {
+//		double errorNum = 0;
+//		int fnNum = 0;
+//		int fpNum = 0;
+//		for (Vector<Double> mail : kcrossValidation.getTestingData()) {
+//			boolean isPredictSpam = predictIsSpam(mail);
+//			boolean isActualSpam = isSpam(mail);
+//			if (isActualSpam != isPredictSpam) {
+//				errorNum++;
+//				if (isFN(isPredictSpam)) {
+//					fnNum++;
+//				} else {
+//					fpNum++;
+//				}
+//			}
+//		}
+//		double[] result = { fnNum, fpNum, errorNum /  kcrossValidation.getTestingData().size() };
+//		return result;
+//	}
+	public boolean predictIsSpam(Vector<Double> mail){
 		double express=0;
 		double spamEle=0;
 		double nonSpamEle=0;

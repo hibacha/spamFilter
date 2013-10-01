@@ -3,12 +3,12 @@ package cs6140.hw2;
 import java.util.ArrayList;
 import java.util.Vector;
 
-public class HistogramClassifier extends BaseClassifier {
+public class HistogramClassifier extends BaseClassifier implements IClassifier{
 
 	/**
 	 * @param args
 	 */
-	private KCrossValidation kcrossValidation = new KCrossValidation(10);
+	
 	private ArrayList<Interval[]> knownBucketList = new ArrayList<Interval[]>();
 	private double[][] spamProb = new double[57][4];
 	private double[][] nonSpamProb = new double[57][4];
@@ -28,34 +28,34 @@ public class HistogramClassifier extends BaseClassifier {
 		HistogramClassifier h = new HistogramClassifier();
 		for (int i = 0; i < 10; i++) {
 			h.beginToTrainData(i);
-			double[] result = h.overallErrorRate();
+			double[] result = h.overallErrorRate(h);
 			System.out.println("histogram@FN:" + result[0] + " FT:" + result[1]
 					+ " OVERALL ERROR RATE:" + result[2]);
 		}
 	}
 
-	public double[] overallErrorRate() {
-		double errorNum = 0;
-		int fnNum = 0;
-		int fpNum = 0;
-		for (Vector<Double> mail : kcrossValidation.getTestingData()) {
-			boolean isPredictSpam = predictIsSpamByHistogram(mail);
-			boolean isActualSpam = isSpam(mail);
-			if (isActualSpam != isPredictSpam) {
-				errorNum++;
-				if (isFN(isPredictSpam)) {
-					fnNum++;
-				} else {
-					fpNum++;
-				}
-			}
-		}
-		double[] result = { fnNum, fpNum,
-				errorNum / kcrossValidation.getTestingData().size() };
-		return result;
-	}
+//	public double[] overallErrorRate() {
+//		double errorNum = 0;
+//		int fnNum = 0;
+//		int fpNum = 0;
+//		for (Vector<Double> mail : kcrossValidation.getTestingData()) {
+//			boolean isPredictSpam = predictIsSpam(mail);
+//			boolean isActualSpam = isSpam(mail);
+//			if (isActualSpam != isPredictSpam) {
+//				errorNum++;
+//				if (isFN(isPredictSpam)) {
+//					fnNum++;
+//				} else {
+//					fpNum++;
+//				}
+//			}
+//		}
+//		double[] result = { fnNum, fpNum,
+//				errorNum / kcrossValidation.getTestingData().size() };
+//		return result;
+//	}
 
-	private boolean predictIsSpamByHistogram(Vector<Double> mail) {
+	public boolean predictIsSpam(Vector<Double> mail) {
 		double result = 1;
 		for (int i = 0; i < 57; i++) {
 			double featureValue = mail.get(i);
