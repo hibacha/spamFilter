@@ -37,6 +37,9 @@ public class BaseClassifier {
 		double errorNum = 0;
 		int fnNum = 0;
 		int fpNum = 0;
+		int tnNum = 0;
+		int tpNum = 0;
+		
 		for (Vector<Double> mail : kcrossValidation.getTestingData()) {
 			boolean isPredictSpam = classifier.predictIsSpam(mail);
 			boolean isActualSpam = isSpam(mail);
@@ -47,10 +50,27 @@ public class BaseClassifier {
 				} else {
 					fpNum++;
 				}
+			}else{
+				if(isPredictSpam){
+					tpNum++;
+				}else{
+					tnNum++;
+				}
 			}
 		}
 		double[] result = { fnNum, fpNum,
 				errorNum / kcrossValidation.getTestingData().size() };
+		System.out.println(tpr(fnNum, fpNum, tnNum, tpNum));
+		System.out.println(fpr(fnNum, fpNum, tnNum, tpNum));
 		return result;
+	}
+	
+	public double tpr(int fnNum, int fpNum, int tnNum, int tpNum){
+		
+		return (double)tpNum/(tpNum+fnNum);
+	}
+	
+	public double fpr(int fnNum, int fpNum, int tnNum, int tpNum){
+		return (double)fpNum/(fpNum+tnNum);
 	}
 }
