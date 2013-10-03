@@ -75,7 +75,7 @@ public class BaseClassifier {
 			if (!drawROC) {
 				tau.add(log);
 			}
-			boolean isPredictSpam = log > threshHold;
+			boolean isPredictSpam = log >= threshHold;
 			boolean isActualSpam = isSpam(mail);
 			if (isActualSpam != isPredictSpam) {
 				errorNum++;
@@ -96,6 +96,7 @@ public class BaseClassifier {
 				errorNum / kcrossValidation.getTestingData().size() };
 		
 		if (drawROC) {
+			System.out.print(fnNum+":"+fpNum+":"+tnNum+":"+tpNum+"\n");
 			double tpr = tpr(fnNum, fpNum, tnNum, tpNum);
 			double fpr = fpr(fnNum, fpNum, tnNum, tpNum);
 			Point point = new Point(fpr, tpr);
@@ -107,10 +108,10 @@ public class BaseClassifier {
 	
 	public double tpr(int fnNum, int fpNum, int tnNum, int tpNum){
 		
-		return (double)tpNum/(tpNum+fnNum);
+		return (double)(tpNum)/(double)(tpNum+fnNum);
 	}
 	
 	public double fpr(int fnNum, int fpNum, int tnNum, int tpNum){
-		return (double)fpNum/(fpNum+tnNum);
+		return (double)(fpNum)/(double)(fpNum+tnNum);
 	}
 }

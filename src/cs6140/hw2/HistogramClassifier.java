@@ -29,34 +29,15 @@ public class HistogramClassifier extends BaseClassifier implements IClassifier{
 		for (int i = 0; i < 10; i++) {
 			h.beginToTrainData(i);
 			double[] result = h.overallErrorRate(h,0, false);
-			System.out.println("histogram@FN:" + result[0] + " FT:" + result[1]
+			System.out.println("histogram@FN:" + result[0] + " FP:" + result[1]
 					+ " OVERALL ERROR RATE:" + result[2]);
 		}
+		
 		
 		h.ROC(h);
 		System.out.println("AUC="+h.AUC());
 	}
 
-//	public double[] overallErrorRate() {
-//		double errorNum = 0;
-//		int fnNum = 0;
-//		int fpNum = 0;
-//		for (Vector<Double> mail : kcrossValidation.getTestingData()) {
-//			boolean isPredictSpam = predictIsSpam(mail);
-//			boolean isActualSpam = isSpam(mail);
-//			if (isActualSpam != isPredictSpam) {
-//				errorNum++;
-//				if (isFN(isPredictSpam)) {
-//					fnNum++;
-//				} else {
-//					fpNum++;
-//				}
-//			}
-//		}
-//		double[] result = { fnNum, fpNum,
-//				errorNum / kcrossValidation.getTestingData().size() };
-//		return result;
-//	}
 
 	public double predictIsSpam(Vector<Double> mail) {
 		double result = 1;
