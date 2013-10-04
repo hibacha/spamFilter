@@ -2,7 +2,11 @@ package cs6140.hw2;
 
 import java.util.ArrayList;
 import java.util.Vector;
-
+/**
+ * implemented Gaussian classifier
+ * @author zhouyf
+ *
+ */
 public class GaussianClassifier extends BaseClassifier implements IClassifier{
 
 	/**

@@ -5,9 +5,16 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Vector;
-
+/**
+ * base class for all classifier
+ * @author zhouyf
+ *
+ */
 public class BaseClassifier {
 
+	/**
+	 * 
+	 */
 	protected List<Double> tau = new ArrayList<Double>();
 	protected KCrossValidation kcrossValidation = new KCrossValidation(10);
 	protected List<Point> plotPoints = new ArrayList<Point>();
@@ -21,6 +28,10 @@ public class BaseClassifier {
 		return mail.get(57) == 1;
 	}
 	
+	/**
+	 * calculate AUC  value
+	 * @return AUC value
+	 */
 	protected double AUC(){
 		double sum=0;
 		for(int i=1;i<plotPoints.size();i++){
@@ -29,6 +40,11 @@ public class BaseClassifier {
 		return sum*0.5;
 	}
 	
+	/**
+	 * calculate average value
+	 * @param elements
+	 * @return average value for given elements array
+	 */
 	protected double average(double[] elements){
 		if(elements.length==0){
 			return 0;
@@ -39,6 +55,10 @@ public class BaseClassifier {
 		}
 		return sum/elements.length;
 	}
+	/**
+	 * print out ROC point 
+	 * @param classifier
+	 */
 	public void ROC(IClassifier classifier){
 		classifier.beginToTrainData(0);
 		overallErrorRate(classifier, 0, false);
@@ -53,6 +73,13 @@ public class BaseClassifier {
 			System.out.println("Roc point ("+p.getX()+","+p.getY()+")");
 		}
 	}
+	/**
+	 * 
+	 * @param classifier
+	 * @param threshHold
+	 * @param drawROC
+	 * @return  fn fp and overall error rate as a array  
+	 */
 	public double[] overallErrorRate(IClassifier classifier, double threshHold,boolean drawROC) {
 		double errorNum = 0;
 		int fnNum = 0;
@@ -96,11 +123,25 @@ public class BaseClassifier {
 		}
 		return result;
 	}
-	
+	/**
+	 * 
+	 * @param fnNum
+	 * @param fpNum
+	 * @param tnNum
+	 * @param tpNum
+	 * @return true positive rate value
+	 */
 	public double tpr(int fnNum, int fpNum, int tnNum, int tpNum){
 		return (double)(tpNum)/(double)(tpNum+fnNum);
 	}
-	
+	/**
+	 * 
+	 * @param fnNum
+	 * @param fpNum
+	 * @param tnNum
+	 * @param tpNum
+	 * @return false positive value
+	 */
 	public double fpr(int fnNum, int fpNum, int tnNum, int tpNum){
 		return (double)(fpNum)/(double)(fpNum+tnNum);
 	}

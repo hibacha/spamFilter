@@ -3,11 +3,14 @@ package cs6140.hw2;
 import java.util.ArrayList;
 import java.util.Vector;
 
+/**
+ * implemented histogram classifier
+ * @author zhouyf
+ *
+ */
 public class HistogramClassifier extends BaseClassifier implements IClassifier{
 
-	/**
-	 * @param args
-	 */
+	
 	
 	private ArrayList<Interval[]> knownBucketList = new ArrayList<Interval[]>();
 	private double[][] spamProb = new double[57][4];
@@ -24,7 +27,6 @@ public class HistogramClassifier extends BaseClassifier implements IClassifier{
 	double proriNonSpam = 0;
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 		HistogramClassifier h = new HistogramClassifier();
 		for (int i = 0; i < 10; i++) {
 			h.beginToTrainData(i);
@@ -32,7 +34,6 @@ public class HistogramClassifier extends BaseClassifier implements IClassifier{
 			System.out.println("histogram@FN:" + result[0] + " FP:" + result[1]
 					+ " OVERALL ERROR RATE:" + result[2]);
 		}
-		
 		
 		h.ROC(h);
 		System.out.println("AUC="+h.AUC());

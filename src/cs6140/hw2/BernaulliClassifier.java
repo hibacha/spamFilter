@@ -10,9 +10,6 @@ import java.util.Vector;
  */
 public class BernaulliClassifier extends BaseClassifier implements IClassifier{
 
-	/**
-	 * @param args
-	 */
 
 	double trainingSetSpamTotalNum = 0;
 	double trainingSetNonSpamTotalNum = 0;
