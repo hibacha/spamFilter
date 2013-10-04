@@ -64,6 +64,9 @@ public class HistogramClassifier extends BaseClassifier implements IClassifier{
 		return result;
 	}
 
+	/**
+	 * train data except the fold k
+	 */
 	public void beginToTrainData(int k) {
 		
 		kcrossValidation.extractTestingSetByIndex(k);
@@ -138,6 +141,7 @@ public class HistogramClassifier extends BaseClassifier implements IClassifier{
 			spamProb[i] = new double[4];
 			nonSpamProb[i]=new double[4];
 		}
+		
 		for (Vector<Double> mail : trainingSet) {
 			if (isSpam(mail)) {
 				for (int i = 0; i < 57; i++) {
@@ -156,7 +160,13 @@ public class HistogramClassifier extends BaseClassifier implements IClassifier{
 		}
 
 	}
-
+    /**
+     * 
+     * @param probForOneFeature
+     * @param featureValue
+     * @param knownIntervals
+     * @param denominator
+     */
 	public void putIntoBucket(double[] probForOneFeature, double featureValue,
 			Interval[] knownIntervals, double denominator) {
 		int resultIndexOfInterval = 0;

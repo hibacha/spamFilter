@@ -9,9 +9,6 @@ import java.util.Vector;
  */
 public class GaussianClassifier extends BaseClassifier implements IClassifier{
 
-	/**
-	 * @param args
-	 */
 	private double trainingSetSpamTotalNum = 0;
 	private double trainingSetNonSpamTotalNum = 0;
 	
@@ -37,7 +34,9 @@ public class GaussianClassifier extends BaseClassifier implements IClassifier{
 		g.ROC(g);
 		System.out.println("AUC="+g.AUC());
 	}
-	
+	/**
+	 * train data except the fold k
+	 */
 	public void beginToTrainData(int k) {
 		trainingSetNonSpamTotalNum = 0;
 		trainingSetSpamTotalNum = 0;
@@ -59,13 +58,19 @@ public class GaussianClassifier extends BaseClassifier implements IClassifier{
 			nonSpamConditionalMui[i]=nonSpamSumFreq[i]/trainingSetNonSpamTotalNum;
 			overallTrainingMui[i]=(spamSumFreq[i]+nonSpamSumFreq[i])/(trainingSetSpamTotalNum+trainingSetNonSpamTotalNum);
 		}
-		calculateVariance(k);
+		calculateVariance();
 		proriSpam = trainingSetSpamTotalNum
 				/ (trainingSetSpamTotalNum + trainingSetNonSpamTotalNum);
 		proriNonSpam = trainingSetNonSpamTotalNum
 				/ (trainingSetSpamTotalNum + trainingSetNonSpamTotalNum);
 	}
 	
+	/**
+	 * calculate conditional mean
+	 * @param spamSumFreq
+	 * @param nonSpamSumFreq
+	 * @param oneMail
+	 */
 	private void calConditionalMean(double[] spamSumFreq, double[] nonSpamSumFreq, Vector<Double> oneMail) {
 		for(int featureIndex=0;featureIndex<57; featureIndex++){
 			if(isSpam(oneMail)){
@@ -75,13 +80,15 @@ public class GaussianClassifier extends BaseClassifier implements IClassifier{
 			}
 		}
 	}
-	private void calculateVariance(int k) {
+	/**
+	 * calculate variance
+	 */
+	private void calculateVariance() {
 		double[] sumSquareSpam= new double[57];
 		double[] sumSquareNonSpam = new double[57];
 		double[] sumSquareOverall = new double[57];
 		
 		ArrayList<Vector<Double>> trainingSet = kcrossValidation.getTrainingData();
-		
 				for(Vector<Double> mail:trainingSet){
 					for(int featureIndex=0;featureIndex<57;featureIndex++){
 						sumSquareOverall[featureIndex]+=Math.pow(mail.get(featureIndex)-overallTrainingMui[featureIndex], 2);
