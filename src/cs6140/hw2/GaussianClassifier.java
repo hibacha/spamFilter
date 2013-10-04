@@ -23,16 +23,13 @@ public class GaussianClassifier extends BaseClassifier implements IClassifier{
 	double proriNonSpam = 0;
 	
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 		GaussianClassifier g= new GaussianClassifier();
 		for(int testGroupId = 0; testGroupId < 10; testGroupId++){
 			g.beginToTrainData(testGroupId);
 			double[] result = g.overallErrorRate(g,0,false);
-			System.out.println("Gaussian@@FN:" + result[0] + " FT:" + result[1]
+			System.out.println("Gaussian FN:" + result[0] + " FT:" + result[1]
 					+ " OVERALL ERROR RATE:" + result[2]);
 		}
-		
-		  
 		g.ROC(g);
 		System.out.println("AUC="+g.AUC());
 	}
@@ -66,7 +63,6 @@ public class GaussianClassifier extends BaseClassifier implements IClassifier{
 	}
 	
 	private void calConditionalMean(double[] spamSumFreq, double[] nonSpamSumFreq, Vector<Double> oneMail) {
-		// TODO Auto-generated method stub
 		for(int featureIndex=0;featureIndex<57; featureIndex++){
 			if(isSpam(oneMail)){
 				spamSumFreq[featureIndex]+=oneMail.get(featureIndex);
@@ -76,7 +72,6 @@ public class GaussianClassifier extends BaseClassifier implements IClassifier{
 		}
 	}
 	private void calculateVariance(int k) {
-		// TODO Auto-generated method stub
 		double[] sumSquareSpam= new double[57];
 		double[] sumSquareNonSpam = new double[57];
 		double[] sumSquareOverall = new double[57];
@@ -110,7 +105,6 @@ public class GaussianClassifier extends BaseClassifier implements IClassifier{
 		}
 	}
 	private void staticsSpamAndNonSpamNumber(Vector<Double> mail) {
-		// TODO Auto-generated method stub
 		if(isSpam(mail)){
 			trainingSetSpamTotalNum++;
 		}else{

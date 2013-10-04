@@ -8,9 +8,6 @@ import java.util.Vector;
 
 public class BaseClassifier {
 
-	/**
-	 * @param args
-	 */
 	protected List<Double> tau = new ArrayList<Double>();
 	protected KCrossValidation kcrossValidation = new KCrossValidation(10);
 	protected List<Point> plotPoints = new ArrayList<Point>();
@@ -53,12 +50,8 @@ public class BaseClassifier {
 		}
 		
 		for(Point p: plotPoints){
-//			System.out.println("["+ p.getX()+"],["+p.getY()+"]");
-			System.out.println(p.getX()+","+p.getY());
+			System.out.println("Roc point ("+p.getX()+","+p.getY()+")");
 		}
-//		for(double d:tau){
-//			System.out.println("ROC"+d);
-//		}
 	}
 	public double[] overallErrorRate(IClassifier classifier, double threshHold,boolean drawROC) {
 		double errorNum = 0;
@@ -75,7 +68,7 @@ public class BaseClassifier {
 			if (!drawROC) {
 				tau.add(log);
 			}
-			boolean isPredictSpam = log >= threshHold;
+			boolean isPredictSpam = (log >= threshHold);
 			boolean isActualSpam = isSpam(mail);
 			if (isActualSpam != isPredictSpam) {
 				errorNum++;
@@ -96,18 +89,15 @@ public class BaseClassifier {
 				errorNum / kcrossValidation.getTestingData().size() };
 		
 		if (drawROC) {
-			System.out.print(fnNum+":"+fpNum+":"+tnNum+":"+tpNum+"\n");
 			double tpr = tpr(fnNum, fpNum, tnNum, tpNum);
 			double fpr = fpr(fnNum, fpNum, tnNum, tpNum);
 			Point point = new Point(fpr, tpr);
-
 			plotPoints.add(point);
 		}
 		return result;
 	}
 	
 	public double tpr(int fnNum, int fpNum, int tnNum, int tpNum){
-		
 		return (double)(tpNum)/(double)(tpNum+fnNum);
 	}
 	

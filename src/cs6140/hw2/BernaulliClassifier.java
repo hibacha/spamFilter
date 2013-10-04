@@ -3,10 +3,11 @@ package cs6140.hw2;
 import java.util.ArrayList;
 import java.util.Vector;
 
-
-
-
-
+/**
+ * implement Bernaulli Classifier
+ * @author zhouyf
+ *
+ */
 public class BernaulliClassifier extends BaseClassifier implements IClassifier{
 
 	/**
@@ -29,13 +30,9 @@ public class BernaulliClassifier extends BaseClassifier implements IClassifier{
 		for(int testGroupId = 0; testGroupId < 10; testGroupId++){
 			b.beginToTrainData(testGroupId);
 			double[] result = b.overallErrorRate(b,0,false);
-			System.out.println("B@@FN:" + result[0] + " FP:" + result[1]
+			System.out.println("Bernaulli FN:" + result[0] + " FP:" + result[1]
 					+ " OVERALL ERROR RATE:" + result[2]);
 		}
-	   
-//		b.beginToTrainData(0);
-//		//first time run on fold1 to get a list of tau
-//		b.overallErrorRate(b, 0, false);
 		b.ROC(b);
 		System.out.println("AUC="+b.AUC());
 	}
